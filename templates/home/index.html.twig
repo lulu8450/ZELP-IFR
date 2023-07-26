@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello
+	{{ controller_name }}!
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
+
+{% block body %}
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Thirteenth navbar example">
+			<div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+				<a class="navbar-brand col-lg-3 me-0" href="{{ path('app_home') }}">Zelp</a>
+				<ul class="navbar-nav col-lg-6 justify-content-lg-center">
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+					</li>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						{% if is_granted('ROLE_RESTAURATEUR') %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_home') }}">Ajouter un Restaurant</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_user_index') }}">Voir les utilisateurs</a>
+							</li>
+						{% endif %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_restaurant_index') }}">Afficher tout les Restaurants</a>
+						</li>
+					{% endif %}
+				</ul>
+				<div class="d-lg-flex col-lg-3 justify-content-lg-end">
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+						<div class="mb-3 text-center text-white">
+							<h3>{{ app.user.firstname }}</h3>
+							<a href="{{ path('app_logout') }}" class="btn btn-danger">Se déconnecter</a>
+						</div>
+					{% else %}
+						<a href="/register" class="btn btn-success">S'enregistrer</a>
+						<a href="/login" class="btn btn-primary">Se connecter</a>
+					{% endif %}
+
+				</div>
+			</div>
+		</nav>
+	</main>
+	<div class="container-fluid">
+		<div class="jumbotron">
+			<h1 class="display-4">Bienvenue sur ZELP!</h1>
+			<p class="lead">ZELP est une plateforme de notation de restaurants.</p>
+			<hr class="my-4">
+			<p>Voiçi les 10 dernier Restaurants les mieux notés!</p>
+		</div>
+	</div>
+
+	<script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+{% endblock %}
+
